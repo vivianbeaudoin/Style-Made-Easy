@@ -1,37 +1,30 @@
-var temperature=0;
-var windSpeed=0;
-var humid=0;
-var normFeel="neither";
-var outfit=0;
-var link;
-
-function fetchingWeather(cityName, countryName, normFeel) {
+function runProgram(cityName, countryName, normFeel) 
+{
     var link = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName +"," +countryName + "&appid=004a87eeec98aaa0d73962e75d3e0a94";
     
-    $.ajax({
-        url: link,
-    })
+    $.ajax
+    (
+        {
+            url: link,
+        }
+    )
     
-  .done(function( response ) {
+  .done(function( response ) 
+    {
         console.log(response);
-    temperature = response.main.temp;
-            windSpeed = response.wind.speed;
-            humid = response.main.humidity;
-            var localWeather = { temperature, windSpeed, humid };        
+        temperature = response.main.temp;
+        windspeed = response.wind.speed;
+        humidity = response.main.humidity;        
         
-        printPicture(temperature, windSpeed, humid, normFeel);
+        pickOutfit(temperature, windspeed, humidity, normFeel)
   });
     
 };
 
-console.log('hello', fetchingWeather('Philadelphia', 'us'));
-console.log(temperature);
-
-
 
 //Start of actually deciding whats going to popup 
 
-pickOutfit: function(temperature, windspeed, humid, normFeel)
+pickOutfit: function(temperature, windspeed, humidity, normFeel)
 {
     
     if(temperature>85)
@@ -84,13 +77,12 @@ pickOutfit: function(temperature, windspeed, humid, normFeel)
     {
         outfit--;
     }
-    return outfit;
+    printPicture(outfit);
 }
 
 // This method picks the picture we are going to put on the website The pictures go through the outfits and then adds an umbrella if needed. 
-printPicture: function(temperature, windSpeed, humid, normFeel)
+printPicture: function(outfit)
 {
-    outfit=pickOutfit(temperature, windSpeed, humid, normFeel);
     //first outfit this is a tanktop and shorts 
     if(outfit==1)
     {
